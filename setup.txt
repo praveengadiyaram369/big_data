@@ -1,0 +1,32 @@
+
+1) Install java and check version with below command.
+    java -version
+
+2) Install python 3.7 (latest). Use pipenv for specific python environment.
+
+3) Install Apache Spark using below commands.
+    
+    (a) Download apache spark
+    wget https://downloads.apache.org/spark/spark-2.4.6/spark-2.4.6-bin-hadoop2.7.tgz
+
+    (b) unzip tgz file.
+    tar xvf spark-2.4.6-bin-hadoop2.7.tgz
+
+    (c) move spark folder to /opt/spark/ with sudo access.
+    sudo mv spark-2.4.6-bin-hadoop2.7/ /opt/spark/
+
+    (d) Add spark folder path to .bashrc and save it(spark environment setup).
+    vim ~/.bashrc
+
+    export SPARK_HOME=/opt/spark
+    export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+    export PYTHONPATH=/home/praveen/.local/share/virtualenvs/pip_virtual_env-5x1reBtS/bin/python/ (respective python path)
+    export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH
+    export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH
+
+    source ~/.bashrc
+
+    Ref: https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/
+
+4) Test setup by executing the command pyspark at appropriate pipenv.
