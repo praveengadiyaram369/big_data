@@ -8,8 +8,11 @@
 2. Preprocess the data.
 
     (a). select only "Country Name","Country Code", "1994", "2004", "2014" columns from Main_Data.
-    (b). If any of the three columns("1994", "2004", "2014") are missing for a Country, then replace with respective Mean/z-score of that Country.
-    (c). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup" column.
+    (b). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup" column. Also drop duplicates records, if any exists.
+    (c). Replace empty "IncomeGroup" with the value "NOT_A_COUNTRY".
+    (d). If all the three columns("1994", "2004", "2014") are missing for a Country, then drop the row(filter).
+    (c). If any of the three columns("1994", "2004", "2014") are missing for a Country, then replace with respective Mean/z-score of that Country.
+    
 
 3. Perform some meaningful analysis.
 
