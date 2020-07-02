@@ -12,9 +12,6 @@ import geopandas
 import matplotlib.pyplot as plt
 import numpy as np
 
-income_data_dict = {"Low income": 4, "Lower middle income": 3,
-                    "Upper middle income": 2, "High income": 1}
-
 
 def get_change_in_percentage(a, b):
     return ((b - a) * 100)/a
@@ -48,14 +45,14 @@ def save_clustering_result(emission_data):
 
     fig, ax = plt.subplots()
 
-    hi = ax.scatter(x_array[country_marker_array == 1],
-                    y_array[country_marker_array == 1], marker='^')
-    umi = ax.scatter(x_array[country_marker_array == 2],
-                     y_array[country_marker_array == 2], marker='s')
-    lmi = ax.scatter(x_array[country_marker_array == 3],
-                     y_array[country_marker_array == 3], marker='x')
-    li = ax.scatter(x_array[country_marker_array == 4],
-                    y_array[country_marker_array == 4], marker='*')
+    hi = ax.scatter(x_array[country_marker_array == 10],
+                    y_array[country_marker_array == 10], marker='*')
+    umi = ax.scatter(x_array[country_marker_array == 20],
+                     y_array[country_marker_array == 20], marker='x')
+    lmi = ax.scatter(x_array[country_marker_array == 30],
+                     y_array[country_marker_array == 30], marker='s')
+    li = ax.scatter(x_array[country_marker_array == 40],
+                    y_array[country_marker_array == 40], marker='^')
 
     plt.legend((li, lmi, umi, hi),
                ('Low income', 'Lower middle income',
@@ -104,8 +101,8 @@ def perform_data_preprocessing(spark):
         "any", subset=("2004", "2014"))
 
     income_df = spark.createDataFrame(
-        [("Low income", 4), ("Lower middle income", 3),
-         ("Upper middle income", 2), ("High income", 1)],
+        [("Low income", 40), ("Lower middle income", 30),
+         ("Upper middle income", 20), ("High income", 10)],
         ["IncomeGroup", "Incomelevel"])
 
     # _load country meta_data income levels
