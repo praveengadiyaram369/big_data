@@ -95,8 +95,8 @@ def show_country_wise_clustering(co2_emisssion_data):
     fig, ax = plt.subplots(1, 1)
 
     # plotting based on clusters that country belongs to
-    plot_data_df.plot(column='change_in_emissions_scaled',
-                      ax=ax, legend=True, cmap='OrRd')
+    plot_data_df.plot(column='prediction',
+                      ax=ax, legend=True)
 
     ax.set_title("Percentage change in CO2 emissions(normalized)", fontsize=12)
 
@@ -159,7 +159,7 @@ def analysing_emissions_data(spark, co2_emisssion_data):
         "skip").transform(co2_emisssion_data)
 
     # creating Kmeans object (5 clusters)
-    kmeans = KMeans(k=5)
+    kmeans = KMeans(k=7)
 
     # clustering operation
     model = kmeans.fit(co2_emisssion_data.select('features'))
