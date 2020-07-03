@@ -4,29 +4,26 @@
 
     (a). Load Main_Data (API_EN.ATM.CO2E.PC_DS2_en_csv_v2_1120909.csv) to Spark dataframe.
     (b). Load Meta_Data (Metadata_Country_API_EN.ATM.CO2E.PC_DS2_en_csv_v2_1120909.csv) to Spark dataframe.
+    (c). Create a new dataframe (income_df) to store details of IncomeGroup and Income level mapping.
 
-2. Preprocess the data.
+2. Data Pre-processing.
 
-    (a). select only "Country Name","Country Code", "1994", "2004", "2014" columns from Main_Data.
-    (b). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup" column. Also drop duplicates records, if any exists.
-    (c). Replace empty "IncomeGroup" with the value "NOT_A_COUNTRY".
-    (d). If all the three columns("1994", "2004", "2014") are missing for a Country, then drop the row(filter).
-    (c). If any of the three columns("1994", "2004", "2014") are missing for a Country, then replace with respective Mean/z-score of that Country.
-    
+    (a). select only "Country Name","Country Code", "2004", "2014" columns from Main_Data and drop duplicates.
+    (b). Filter rows which has null in any columns of "2004" and "2014".
+    (c). Add new column "change_in_emissions" which stores the increase/decrease in co2_emission levels in percentage.
+    (d). Add new column "change_in_emissions_scaled" which stores the normalized z-score value of the data.
+    (d). Join Meta_Data with income_df with IncomeGroup and merge "Incomelevel" column.  
+    (e). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup", "Incomelevel" columns. 
+    (f). Filter rows which has null in any columns of "IncomeGroup".    
 
 3. Perform some meaningful analysis.
 
-    (a). Calculate the difference in Emissions between 2004 and 1994 to a new column "change_in_emissions".
-    (b). Perform clustering on countries with respect to their "change_in_emissions" values.
-    (c). Assign each cluster a level of change. (Eg:- 5 clusters - level 1 to level 5).
-    (d). Apply clustering(group by) with respect to "IncomeGroup".
-    (e). Perform Co-relation analysis among clusters from steps (c) and (d).
-    (f). Perform Regression analysis on the data to predict 2014 CO2 Emissions.
-    (g). Compare the predicted values against actual values.
+    (a). Perform k-means clustering on countries with respect to their "change_in_emissions" values.
+    (e). Perform Co-relation analysis(+/-) between country's change_in_emissions and their respective IncomeGroup.
 
 4. Present/visualize your results.
 
-    (a). Plot Country wise CO2 Emissions change using GeoPandas.
-    (b). Plot year-wise CO2 Emissions for a Country(as a sample).
+    (a). Plot Country wise CO2 Emissions change with GeoPandas.
+    (b). Plot Income wise CO2 Emissions change in Scatter plots.
 
 5. Describe your approach.
