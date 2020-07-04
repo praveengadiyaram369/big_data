@@ -99,7 +99,7 @@ def show_country_wise_clustering(co2_emisssion_data):
                       ax=ax, legend=True)
 
     ax.set_title("Percentage change in CO2 emissions(normalized)", fontsize=12)
-
+    #saving the plot image in result folder
     plt.savefig('results/plots/' +
                 'countries_clustered_by_co2_emissions.png', bbox_inches='tight')
     plt.show()
@@ -119,7 +119,7 @@ def perform_data_preprocessing(spark):
     co2_emisssion_data = co2_emisssion_data.select(
         "Country Name", "Country Code", "2004", "2014").dropDuplicates()  # _drop duplicate rows
 
-    # _filter the rows which have no values for all 1994, 2004, 2014
+    # _filter the rows which have no values for all 2004, 2014
     co2_emisssion_data = co2_emisssion_data.na.drop(
         "any", subset=("2004", "2014"))
 
@@ -132,6 +132,8 @@ def perform_data_preprocessing(spark):
         mean("change_in_emissions"), stddev("change_in_emissions")).first()
     co2_emisssion_data = co2_emisssion_data.withColumn(
         'change_in_emissions_scaled', get_normalized_value(co2_emisssion_data['change_in_emissions'], mean_change, std_change))
+    #removing outliers that are 3 standard deviations away from the mean
+    co2_emisssion_data = co2_emisssion_data.where(col('change_in_emissions_scaled')<3)
 
     # _load country meta_data income levels
     country_meta_data = country_meta_data.select("Country Code", "IncomeGroup")
@@ -146,6 +148,7 @@ def perform_data_preprocessing(spark):
         subset=("IncomeGroup"))  # _filter null IncomeGroup rows
 
     return co2_emisssion_data
+
 
 
 def analysing_emissions_data(spark, co2_emisssion_data):
