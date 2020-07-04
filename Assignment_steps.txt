@@ -12,9 +12,10 @@
     (b). Filter rows which has null in any columns of "2004" and "2014".
     (c). Add new column "change_in_emissions" which stores the increase/decrease in co2_emission levels in percentage.
     (d). Add new column "change_in_emissions_scaled" which stores the normalized z-score value of the data.
-    (d). Join Meta_Data with income_df with IncomeGroup and merge "Incomelevel" column.  
-    (e). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup", "Incomelevel" columns. 
-    (f). Filter rows which has null in any columns of "IncomeGroup".    
+    (e). Removed outliers which are 3 standard deviations away from the mean.
+    (f). Join Meta_Data with income_df with IncomeGroup and merge "Incomelevel" column.  
+    (g). Join Meta_Data with Main_Data with Country Code and merge "IncomeGroup", "Incomelevel" columns. 
+    (h). Filter rows which has null in any columns of "IncomeGroup".    
 
 3. Perform some meaningful analysis.
 
