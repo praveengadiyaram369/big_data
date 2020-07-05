@@ -14,11 +14,11 @@ import numpy as np
 
 
 def get_change_in_percentage(a, b):
-    return ((b - a) * 100)/a
+    return ((b - a) * 100)/a    # _absolute change in data
 
 
 def get_normalized_value(val, mean_change, std_change):
-    return (val - mean_change)/std_change
+    return (val - mean_change)/std_change       # _normalized z-score
 
 
 def load_data(spark, file_name):
@@ -62,11 +62,11 @@ def show_scatter_plot(emission_data):
                ('Low income', 'Lower middle income',
                 'Upper middle income', 'High income'),
                scatterpoints=1,
-               loc='upper right',
+               loc='best',
                fontsize=8)
 
     ax.yaxis.get_major_locator().set_params(integer=True)
-    plt.title("CO2 emissions Clustering k=5 representing country's Incomegroup ")
+    plt.title("CO2 emissions Clustering k=7 representing country's Incomegroup ")
     plt.ylabel("Cluster Id")
     plt.xlabel("Percentage change(normalized) in CO2 emissions from 2004 to 2014")
 
@@ -98,8 +98,8 @@ def show_country_wise_clustering(co2_emisssion_data):
     plot_data_df.plot(column='prediction',
                       ax=ax, legend=True)
 
-    ax.set_title("Percentage change in CO2 emissions(normalized)", fontsize=12)
-    #saving the plot image in result folder
+    ax.set_title("Countries clustered by K-means(k=7)", fontsize=12)
+    # saving the plot image in result folder
     plt.savefig('results/plots/' +
                 'countries_clustered_by_co2_emissions.png', bbox_inches='tight')
     plt.show()
@@ -132,8 +132,9 @@ def perform_data_preprocessing(spark):
         mean("change_in_emissions"), stddev("change_in_emissions")).first()
     co2_emisssion_data = co2_emisssion_data.withColumn(
         'change_in_emissions_scaled', get_normalized_value(co2_emisssion_data['change_in_emissions'], mean_change, std_change))
-    #removing outliers that are 3 standard deviations away from the mean
-    co2_emisssion_data = co2_emisssion_data.where(col('change_in_emissions_scaled')<3)
+    # removing outliers that are 3 standard deviations away from the mean
+    co2_emisssion_data = co2_emisssion_data.where(
+        col('change_in_emissions_scaled') < 3)
 
     # _load country meta_data income levels
     country_meta_data = country_meta_data.select("Country Code", "IncomeGroup")
@@ -148,7 +149,6 @@ def perform_data_preprocessing(spark):
         subset=("IncomeGroup"))  # _filter null IncomeGroup rows
 
     return co2_emisssion_data
-
 
 
 def analysing_emissions_data(spark, co2_emisssion_data):
