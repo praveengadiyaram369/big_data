@@ -1,3 +1,17 @@
+"""
+
+Analyzing country's CO2 emissions data using Apache Spark. 
+
+Source Code Authors:
+
+1) Naga Kartheek Reddy Kona : 219203205
+2) Kausik Kappaganthula : 219203215
+3) Sowjanya Chennamaneni:219203249
+4) Sri Sai Praveen Gadiyaram : 219203192
+5) Arun Anirudhan  : 219203285
+
+"""
+
 # _importing pyspark libraries
 from pyspark import SparkContext
 from pyspark.sql.session import SparkSession
@@ -161,7 +175,7 @@ def analysing_emissions_data(spark, co2_emisssion_data):
     co2_emisssion_data = vecAssembler.setHandleInvalid(
         "skip").transform(co2_emisssion_data)
 
-    # creating Kmeans object (5 clusters)
+    # creating Kmeans object (7 clusters)
     kmeans = KMeans(k=7)
 
     # clustering operation
@@ -183,8 +197,8 @@ def perform_correlation_analysis(co2_emisssion_data):
 
     # _look at average emissions for each income group
     co2_emisssion_data.show(5)
-    co2_emisssion_data.select("IncomeGroup", "2014").groupBy(
-        "IncomeGroup").agg(avg("2014").alias('average_emissions')).orderBy("average_emissions").show()
+    co2_emisssion_data.select("IncomeGroup", "change_in_emissions_scaled").groupBy(
+        "IncomeGroup").agg(avg("change_in_emissions_scaled").alias('average_change_in_emissions')).orderBy("average_change_in_emissions").show()
 
     # _perform correlation on country's decade change in emissions and income level
     corr_decade_change_income = co2_emisssion_data.stat.corr(
