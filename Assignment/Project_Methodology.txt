@@ -28,3 +28,7 @@
     (b). Plot Income wise CO2 Emissions change in Scatter plots.
 
 5. Describe your approach.
+
+
+# Correlation result:
+#Correlation between country's 2004-2014 decade co_2 emission changes and income levels: 0.45107301369828307
