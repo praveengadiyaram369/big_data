@@ -36,3 +36,6 @@
 
 6) Install descartes using below command.
     pipenv install descartes
+
+7) Installing Docker using below command.
+    

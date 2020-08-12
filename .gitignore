@@ -1,6 +1,7 @@
 submissions/*
 lecture_slides/*
 videos/*
-tutorials/*
+*.pdf
 project/*
 extra_material/*
+tutorial_material/*
